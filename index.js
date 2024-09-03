@@ -15,4 +15,4 @@ const server = app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
 
-exports = {app, server};
+module.exports = {app, server}
