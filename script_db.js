@@ -5,7 +5,7 @@ async function createDatabase() {
   try {
     const connection = await mysql.createConnection({
       host: 'localhost', // Use o nome do host do seu contêiner MySQL
-      user:  process.env.MYSQL_USER, // Seu nome de usuário do MySQL
+      user: process.env.MYSQL_USER, // Seu nome de usuário do MySQL
       password: process.env.MYSQL_PASSWORD,
 
     });
@@ -22,22 +22,27 @@ async function createDatabase() {
 async function createTables() {
   try {
     const connection = await mysql.createConnection({
-      	host: 'localhost', // Use o nome do host do seu contêiner MySQL
-  	user:  process.env.MYSQL_USER, // Seu nome de usuário do MySQL
-  	password: process.env.MYSQL_PASSWORD,
-  	database: process.env.MYSQL_DATABASE 
+      host: 'localhost', // Use o nome do host do seu contêiner MySQL
+      user: process.env.MYSQL_USER, // Seu nome de usuário do MySQL
+      password: process.env.MYSQL_PASSWORD,
+      database: process.env.MYSQL_DATABASE
     });
 
-  
-     await connection.query(`
+
+    await connection.query(`
        CREATE TABLE IF NOT EXISTS users (
          id INT AUTO_INCREMENT PRIMARY KEY,
          name VARCHAR(255) NOT NULL,
            email VARCHAR(255) NOT NULL
        )
      `);
-
     console.log('Tabelas criadas com sucesso.');
+
+    await connection.query(`
+      INSERT INTO users (name, email) 
+      VALUES ('João Silva', 'joao.silva@example.com');
+    `);
+    console.log('Dados inseridos com sucesso');
 
     connection.close();
   } catch (error) {
